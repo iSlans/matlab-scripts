@@ -3,12 +3,12 @@
 % A = reshape(c, 4, 4)';
 % assignment(A) % not local function for script file
 
-function [x, fval] = assignment(table, displayData)
+function [x, fval] = assignment(table, options)
     % ASSIGNMENT table: problem's assignment cost table
 
     arguments
-        table {ismatrix, mustBeNumeric, mustBeSquareMatrix}
-        displayData {mustBeNumericOrLogical} = true
+        table (:, :) {mustBeNumeric, mustBeSquareMatrix}
+        options.displayData logical {mustBeNumericOrLogical} = true
     end
 
     % --------------------------------- Get sizes -------------------------------- %
@@ -38,7 +38,7 @@ function [x, fval] = assignment(table, displayData)
 
     % -------------------------------- Print Data -------------------------------- %
 
-    if (displayData == true)
+    if (options.displayData == true)
 
         fprintf('Solving Assignment problem: \n \n')
 
