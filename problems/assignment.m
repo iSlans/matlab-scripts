@@ -42,21 +42,21 @@ function [x, fval] = assignment(table, options)
 
         fprintf('Solving Assignment problem: \n \n')
 
-        fprintf('c: \t[%s]\n', join(string(c'), ' '));
+        fprintf('c: \t %s \n', str(c));
 
         F = ['\t', repmat(' %d', 1, size(Aeq, 2)), '\n'];
         fprintf('Aeq: [\n')
         fprintf(F, Aeq')
         fprintf(']\n')
 
-        fprintf('beq: \t[%s]\n', join(string(beq'), ' '));
-        fprintf('lb: \t[%s]\n', join(string(lb'), ' '));
-        % fprintf('ub: \t[%s]\n', join(string(ub'), ' '));
+        fprintf('beq: \t %s \n', str(beq));
+        fprintf('lb: \t %s \n', str(lb));
+        % fprintf('ub: \t %s \n', str(ub'));
 
         fprintf('\n')
         fprintf('linprog(c, [], [], Aeq, beq, lb, [])\n');
-        fprintf('x: \t[%s]\n', join(string(x'), ' '));
-        fprintf('fval: \t%d \n', fval);
+        fprintf('x: \t %s \n', str(x));
+        fprintf('fval: \t %d \n', fval);
 
     end
 
@@ -70,5 +70,16 @@ function mustBeSquareMatrix(matrix)
         msg = 'Must be a square matrix.';
         throwAsCaller(MException(eid, msg))
     end
+
+end
+
+function str = str(o)
+
+    arguments
+        o (1, :)
+    end
+
+    str = join(string(o), ' ');
+    str = sprintf("[ %s ]", str);
 
 end
