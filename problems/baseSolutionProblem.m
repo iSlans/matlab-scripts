@@ -1,6 +1,7 @@
-function [sol, sol_dual] = baseSolutionProblem(c, A, b, baseIndex, opt)
+function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
     % BASESOLUTION
-    %   find with base indexes
+    % given c, A, b in primal form notation
+    % find with base indices:
     %       - primal base solution x
     %       - dual base solution y
 
@@ -10,55 +11,24 @@ function [sol, sol_dual] = baseSolutionProblem(c, A, b, baseIndex, opt)
         b (:, 1) {mustBeNumeric}
         baseIndex (:, 1) {mustBeNumeric} = 1:length(b)
 
-        opt.form string {mustBeMember(opt.form, ["primal", "dual"])} = "primal"
-        opt.objective string {mustBeMember(opt.objective, ["min", "max"])} = "max"
-        opt.display logical = false
-
     end
 
-    if (opt.form == "primal")
+    % log.info("BaseSolution: solving for primal form \n")
 
-        sol = baseSolution(A, b, baseIndex);
-        isAdmissible(A, sol, b);
-        isDegenerate(A, sol, b, baseIndex);
+    x_sol = baseSolution(A, b, baseIndex);
 
-        A_dual = A(baseIndex, :)';
-        b_dual = c;
+    A_dual = A(baseIndex, :)';
+    b_dual = c;
 
-        sol_dual = zeros(length(b), 1);
-        sol_dual(baseIndex) = baseSolution(A_dual, b_dual);
+    y_sol = zeros(length(b), 1);
+    y_sol(baseIndex) = baseSolution(A_dual, b_dual);
 
-        fprintf("x = [ %s ] \n", toRationalString(sol))
-        fprintf("y = [ %s ] \n", toRationalString(sol_dual))
+    log.info("x = [ %s ] \n", toRationalString(x_sol))
+    log.info("y = [ %s ] \n", toRationalString(y_sol))
 
-        sol = sol';
-        sol_dual = sol_dual';
+    % x_sol = x_sol';
+    % y_sol = y_sol';
 
-    end
-
-    if (opt.form == "dual")
-        disp("...")
-    end
-
-    % ----------------------------------- print ---------------------------------- %
-
-    % if (opt.display == true)
-
-    %     vars = optimvar("x", size(c));
-    %     objFun = dot(vars, c);
-    %     constraints = A * vars <= b;
-
-    %     problem = optimproblem;
-    %     problem.ObjectiveSense = opt.objective;
-    %     problem.Objective = objFun;
-    %     problem.Constraints = constraints;
-
-    %     format compact
-    %     show(problem)
-    %     % solve(problem)
-    % end
-
-    % ------------------------------------- - ------------------------------------ %
 end
 
 % utils function

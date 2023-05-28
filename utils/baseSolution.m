@@ -1,6 +1,6 @@
 % function x = base(A, b, baseIndex)
 function x = baseSolution(A, b, baseIndex)
-    % BASESOLUTION solve AX = b with base indexes
+    % BASESOLUTION solve AX = b with base indices
 
     arguments
         A (:, :) {mustBeNumeric}
@@ -11,12 +11,17 @@ function x = baseSolution(A, b, baseIndex)
     Abase = A(baseIndex, :);
     bbase = b(baseIndex);
 
-    x = linsolve(Abase, bbase);
+    % x = linsolve(Abase, bbase);
+
+    x = Abase \ bbase;
+
+    % floating point round-off error, trying to cover it up
+    x = roundFloating(x);
 
 end
 
 % Custom validation function
-function dimensionsCheck(A, b, indexes)
+function dimensionsCheck(A, b, indices)
 
     [n, m] = size(A);
 
@@ -26,10 +31,10 @@ function dimensionsCheck(A, b, indexes)
         msg = sprintf(msg, n, length(b));
         throwAsCaller(MException(eid, msg))
 
-    elseif (m ~= length(indexes))
+    elseif (m ~= length(indices))
         eid = 'Size:notEqual';
-        msg = 'Size of indexes must equal of size2 matrix A: %d, got %d.';
-        msg = sprintf(msg, m, length(indexes));
+        msg = 'Size of indices must equal of size2 matrix A: %d, got %d.';
+        msg = sprintf(msg, m, length(indices));
         throwAsCaller(MException(eid, msg))
     end
 
