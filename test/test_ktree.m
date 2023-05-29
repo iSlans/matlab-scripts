@@ -28,6 +28,9 @@ A = [
 g = graph(A, string(1:length(A)), "upper");
 tree = ktree(g, 5)
 
+ktree_cost = sum(tree.Edges.Weight)
+
+% plot figures
 nexttile
 p = plot(g);
 highlight(p, tree)

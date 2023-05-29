@@ -32,7 +32,7 @@ function tree = ktree(graph, root)
     % --------------------------- connect root to tree --------------------------- %
 
     tree = tree.addnode(root);
-    tree = reordernodes(tree, sort(tree.Nodes.Name));
+    tree = reordernodes(tree, graph.Nodes.Name);
 
     root_edges = graph.Edges(outedges(graph, root), :);
 

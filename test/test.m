@@ -2,7 +2,7 @@
 % addpath('./problems')
 % addpath('./utils')
 
-% format compact
+format compact
 
 % Hamilton
 A = [
@@ -12,7 +12,7 @@ A = [
     25 58 12 1000 23
     33 76 30 23 1000
     ];
-x = assignment(A);
+% x = assignment(A);
 
 A = [
     0 24 21 20 9
@@ -21,4 +21,6 @@ A = [
     0 0 0 0 28
     0 0 0 0 0
     ];
-A = A + A' + eye(5) * 1000
+A = A + A' + eye(5) * 1e5;
+
+[p, v] = nearestNode(A, 1)
