@@ -4,21 +4,18 @@ Scripts per risolvere i problemi di
 Ricerca Operativa - Ing. Informatica Unipi   
 
 
-[TOC]
-
-
 ## Run Locally  
 
 Clone the project  
 
 ~~~bash  
-  git clone https://link-to-project
+  git clone https://github.com/iSlans/matlab-scripts.git
 ~~~
 
 Go to the project directory  
 
 ~~~bash  
-  cd my-project
+  cd matlab-scripts
 ~~~
 
 Add Folder & Subfolders to Matlab paths  
