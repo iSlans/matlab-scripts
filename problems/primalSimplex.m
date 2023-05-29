@@ -104,10 +104,14 @@ function str = toTableString(matrix, colNames)
 
     arguments
         matrix (:, :)
-        colNames = ["key", "value"]
+        colNames (1, :) = ["key", "value"]
     end
 
-    table = array2table(matrix, "VariableNames", colNames);
+    if size(matrix, 2) == length(colNames)
+        table = array2table(matrix, "VariableNames", colNames);
+    else
+        table = array2table(matrix);
+    end
 
     str = formattedDisplayText(table, "SuppressMarkup", true, "LineSpacing", "compact");
     str = regexprep(str, '"', ' '); % remove " char

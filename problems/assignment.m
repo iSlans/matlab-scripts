@@ -3,12 +3,13 @@
 % A = reshape(c, 4, 4)';
 % assignment(A) % not local function for script file
 
-function [x, fval] = assignment(table, options)
-    % ASSIGNMENT table: problem's assignment cost table
+function [x, fval] = assignment(table)
+    % ASSIGNMENT
+    %   solve the min cost assignment problem
+    %   table: assignment cost table
 
     arguments
         table (:, :) {mustBeNumeric, mustBeSquareMatrix}
-        options.displayData logical {mustBeNumericOrLogical} = true
     end
 
     % --------------------------------- Get sizes -------------------------------- %
@@ -38,27 +39,27 @@ function [x, fval] = assignment(table, options)
 
     % -------------------------------- Print Data -------------------------------- %
 
-    if (options.displayData == true)
+    log.info('Solving Assignment problem: \n \n')
 
-        fprintf('Solving Assignment problem: \n \n')
+    log.info('c: \t %s \n', str(c));
 
-        fprintf('c: \t %s \n', str(c));
+    F = ['\t', repmat(' %d', 1, size(Aeq, 2)), '\n'];
+    log.info('Aeq: [\n')
+    log.info(F, Aeq')
+    log.info(']\n')
 
-        F = ['\t', repmat(' %d', 1, size(Aeq, 2)), '\n'];
-        fprintf('Aeq: [\n')
-        fprintf(F, Aeq')
-        fprintf(']\n')
+    log.info('beq: \t %s \n', str(beq));
+    log.info('lb: \t %s \n', str(lb));
+    % log.info('ub: \t %s \n', str(ub'));
 
-        fprintf('beq: \t %s \n', str(beq));
-        fprintf('lb: \t %s \n', str(lb));
-        % fprintf('ub: \t %s \n', str(ub'));
+    log.info('\n')
+    log.info('linprog(c, [], [], Aeq, beq, lb, [])\n');
+    log.info('x: \t %s \n', str(x));
+    log.info('fval: \t %d \n', fval);
 
-        fprintf('\n')
-        fprintf('linprog(c, [], [], Aeq, beq, lb, [])\n');
-        fprintf('x: \t %s \n', str(x));
-        fprintf('fval: \t %d \n', fval);
-
-    end
+    squared = reshape(x, size(table));
+    txt = formattedDisplayText(squared, "NumericFormat", "short");
+    log.info("x formatted = \n%s \n", txt)
 
 end
 

@@ -13,8 +13,6 @@ function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
 
     end
 
-    % log.info("BaseSolution: solving for primal form \n")
-
     x_sol = baseSolution(A, b, baseIndex);
 
     A_dual = A(baseIndex, :)';
@@ -25,9 +23,6 @@ function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
 
     log.info("x = [ %s ] \n", toRationalString(x_sol))
     log.info("y = [ %s ] \n", toRationalString(y_sol))
-
-    % x_sol = x_sol';
-    % y_sol = y_sol';
 
 end
 

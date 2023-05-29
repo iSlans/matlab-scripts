@@ -93,4 +93,11 @@ classdef log
 
     end
 
+    methods (Access = private, Hidden)
+
+        function obj = log()
+        end
+
+    end
+
 end
