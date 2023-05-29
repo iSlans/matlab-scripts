@@ -25,7 +25,7 @@ function [x, y] = primalSimplex(c, A, b, baseIndex, opt)
 
     log.info("\nPrimal Simplex step %d \n", opt.currentDepth)
 
-    [x, y] = baseSolutionProblem(c, A, b, baseIndex);
+    [x, y] = baseSolutionProblem(c, A, b, baseIndex, noPrint = true);
 
     primal_constraints = b - A * x;
     primal_constraints = roundFloating(primal_constraints);
@@ -69,6 +69,8 @@ function [x, y] = primalSimplex(c, A, b, baseIndex, opt)
 
     infoData = [
         "base" toRationalString(baseIndex)
+        "x" toRationalString(x)
+        "y" toRationalString(y)
         "f function value " dot(c, x)
         "h exiting index " h
         "k entering index " k

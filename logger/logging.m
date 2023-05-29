@@ -13,7 +13,7 @@ function x = logging(mode)
         return
     end
 
-    if ~isprop(log, upper(mode))
+    if ~isprop(log.getLevels, upper(mode))
         mustBeMember(mode, lower(properties(log)));
     end
 

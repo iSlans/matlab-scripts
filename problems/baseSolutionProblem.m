@@ -1,4 +1,4 @@
-function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
+function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex, opt)
     % BASESOLUTION
     % given c, A, b in primal form notation
     % find with base indices:
@@ -11,6 +11,8 @@ function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
         b (:, 1) {mustBeNumeric}
         baseIndex (:, 1) {mustBeNumeric} = 1:length(b)
 
+        opt.noPrint logical = false
+
     end
 
     x_sol = baseSolution(A, b, baseIndex);
@@ -21,8 +23,10 @@ function [x_sol, y_sol] = baseSolutionProblem(c, A, b, baseIndex)
     y_sol = zeros(length(b), 1);
     y_sol(baseIndex) = baseSolution(A_dual, b_dual);
 
-    log.info("x = [ %s ] \n", toRationalString(x_sol))
-    log.info("y = [ %s ] \n", toRationalString(y_sol))
+    if ~opt.noPrint
+        log.info("x = [ %s ] \n", toRationalString(x_sol))
+        log.info("y = [ %s ] \n", toRationalString(y_sol))
+    end
 
 end
 

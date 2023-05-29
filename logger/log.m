@@ -62,6 +62,10 @@ classdef log
 
         end
 
+        function l = getLevels()
+            l = log;
+        end
+
     end
 
     methods (Static, Access = private)

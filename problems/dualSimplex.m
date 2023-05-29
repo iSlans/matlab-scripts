@@ -31,7 +31,7 @@ function [y, x] = dualSimplex(c, A, b, baseIndex, opt)
 
     log.info("\nDual Simplex step %d \n", opt.currentDepth)
 
-    [x, y] = baseSolutionProblem(c, A, b, baseIndex);
+    [x, y] = baseSolutionProblem(c, A, b, baseIndex, noPrint = true);
 
     if any(y < 0)
         log.error("y not admissible\n")
@@ -72,6 +72,8 @@ function [y, x] = dualSimplex(c, A, b, baseIndex, opt)
 
     infoData = [
         "base" toRationalString(baseIndex)
+        "x" toRationalString(x)
+        "y" toRationalString(y)
         "f function value " dot(b, y)
         "h exiting index " h
         "k entering index " k
