@@ -1,18 +1,24 @@
-% A = [1 2 3; 4 5 6; 7 8 9]
-% c = [47, 14, 42, 21, 36, 18, 43, 28, 39, 29, 38, 36, 31, 22, 28, 39];
-% A = reshape(c, 4, 4)';
-% assignment(A) % not local function for script file
-
-function [x, fval] = assignment(table, lb, ub)
+function [x, fval] = assignmentSymmetric(table, lb, ub)
     % ASSIGNMENT
-    %   solve the min cost assignment problem
-    %   table: assignment cost table
+    %   helper function for symmetric TSP inadmissibility check in branch&bound
+    %   table: assignment cost table, upper triangular
+    %   lb: lowerbound
+    %   ub: upperbound
+    % - use lb and ub to fix a variable value
+    %
+    % note: lb, ub refer to table variables in column wise order
 
     arguments
         table (:, :) {mustBeNumeric, mustBeSquareMatrix}
         lb (:, 1) = []
         ub (:, 1) = []
     end
+
+    if ~isequal(table, triu(table)) && ~isequal(table, table')
+        log.warning("\nWarning: Input table is not a upper triangular, considering only the upper value... \n ")
+    end
+
+    table = triu(table);
 
     % --------------------------------- Get sizes -------------------------------- %
 
@@ -23,17 +29,23 @@ function [x, fval] = assignment(table, lb, ub)
 
     c = reshape(table, [], 1);
 
-    cols_contraint = repmat(diag(ones(length, 1)), 1, length);
-    rows_contraint = zeros(length, num_vars);
+    grade_contraint = [];
 
-    for row = 1:length
-        start_idx = 1 + (row - 1) * length;
-        end_idx = row * length;
-        rows_contraint(row, start_idx:end_idx) = 1;
+    for i = 1:length
+        tab = zeros(length);
+        tab(i, i + 1:end) = 1;
+        tab(1:i - 1, i) = 1;
+
+        % tab = tab';
+
+        grade_contraint = [
+            grade_contraint
+            tab(:)'
+            ];
     end
 
-    Aeq = [rows_contraint; cols_contraint];
-    beq = ones(length * 2, 1);
+    Aeq = grade_contraint;
+    beq = ones(length, 1) * 2;
 
     if isempty(lb)
         lb = zeros(num_vars, 1);
@@ -47,7 +59,7 @@ function [x, fval] = assignment(table, lb, ub)
 
     % -------------------------------- Print Data -------------------------------- %
 
-    log.info('Solving Assignment problem: \n \n')
+    log.info('Solving Assignment problem (column wise variables order): \n \n')
 
     log.info('c = \t %s \n', str(c));
 
@@ -58,7 +70,7 @@ function [x, fval] = assignment(table, lb, ub)
 
     log.info('beq = \t %s \n', str(beq));
     log.info('lb = \t %s \n', str(lb));
-    log.info('ub = \t %s \n', str(ub));
+    log.info('ub = \t %s \n', str(ub'));
 
     log.info('\n')
     log.info('linprog(c, [], [], Aeq, beq, lb, ub)\n');

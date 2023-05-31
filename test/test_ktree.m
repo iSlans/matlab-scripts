@@ -26,7 +26,7 @@ A = [
     ];
 
 g = graph(A, string(1:length(A)), "upper");
-tree = ktree(g, 5)
+tree = ktree(A, 5)
 
 ktree_cost = sum(tree.Edges.Weight)
 

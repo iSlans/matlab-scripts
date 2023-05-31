@@ -12,7 +12,9 @@ A = [
     25 58 12 1000 23
     33 76 30 23 1000
     ];
-% x = assignment(A);
+x = assignment(A);
+
+return
 
 A = [
     0 24 21 20 9
