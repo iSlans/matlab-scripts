@@ -119,9 +119,6 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
         t(sol) = problem.originalTable(sol);
         g = graph(t, "upper");
 
-        log.debug("ktree solution: ")
-        solution.allcycles
-
         nexttile
         plot(g, "EdgeLabel", g.Edges.Weight)
         title(sprintf("ID: P%d%d", problem.name), sprintf("Value = %d", value))

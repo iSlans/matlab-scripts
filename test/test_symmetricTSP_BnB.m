@@ -42,8 +42,8 @@ ktree_root = 4;
 % ktree_root = 5;
 % nearestNode_root = 1;
 
-% figure(Name = "ktree solutions")
-% [sol, value] = SymmetricTSPBranchAndBound(A, nearestNode_root, ktree_root, vars)
+figure(Name = "ktree solutions")
+[sol, value] = SymmetricTSPBranchAndBound(A, nearestNode_root, ktree_root, vars)
 
 % ---------------------------------------------------------------------------- %
 %                                    30-1-23                                   %
@@ -138,5 +138,5 @@ vars = [
 ktree_root = 5;
 nearestNode_root = 4;
 
-figure(Name = "ktree solutions")
-[sol, value] = SymmetricTSPBranchAndBound(A, nearestNode_root, ktree_root, vars)
+% figure(Name = "ktree solutions")
+% [sol, value] = SymmetricTSPBranchAndBound(A, nearestNode_root, ktree_root, vars)
