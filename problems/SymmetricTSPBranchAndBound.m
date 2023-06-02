@@ -8,12 +8,13 @@
 
 % SymmetricTSPBranchAndBound(A, 3,4)
 
-function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_ROOT)
+function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_ROOT, decision_priority)
 
     arguments
         table (:, :)
-        NEARESTNODE_ROOT = 3;
-        KTREE_ROOT = 4;
+        NEARESTNODE_ROOT
+        KTREE_ROOT
+        decision_priority
     end
 
     % ---------------------------------------------------------------------------- %
@@ -29,13 +30,18 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
     problem.assignmentTable = table + eye(size(table, 1)) * 1e+4;
     problem.lb = zeros(numel(table), 1);
     problem.ub = ones(numel(table), 1);
-    problem.decision_priority = [3, 4; 4, 5];
+    problem.decision_priority = decision_priority;
 
     % ---------------------------------------------------------------------------- %
     %                             find upper evaluation                            %
     % ---------------------------------------------------------------------------- %
 
     [upperEvalSolution, upperEvalValue] = nearestNode(table, NEARESTNODE_ROOT, "isSymmetric", true);
+
+    log.info("nearestNode solution: \n")
+    log.info("cycle : ")
+    log.info("%d ", upperEvalSolution)
+    log.info("\nvalue: %d \n", upperEvalValue)
 
     % ---------------------------------------------------------------------------- %
     %                                Branch & Bound                                %
@@ -50,7 +56,7 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
         @branchingFunction);
 
     if isa(sol, "graph")
-        sol = sol.allcycles;
+        sol = sol.cyclebasis{1};
     end
 
     % ---------------------------------------------------------------------------- %
@@ -65,9 +71,10 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
         lb = problem.lb;
         ub = problem.ub;
 
+        old_logging = logging;
         logging warning
         [relaxed_sol, relaxed_sol_value] = assignmentSymmetric(table, lb, ub);
-        logging info
+        logging(old_logging)
 
         if isempty(relaxed_sol)
             disp("grade contraints violated")
@@ -107,6 +114,18 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
         % so to find the value need to appraise it from the original table
         sol = logical(triu(solution.adjacency));
         value = sum(problem.originalTable(sol));
+
+        t = zeros(size(problem.originalTable));
+        t(sol) = problem.originalTable(sol);
+        g = graph(t, "upper");
+
+        log.debug("ktree solution: ")
+        solution.allcycles
+
+        nexttile
+        plot(g, "EdgeLabel", g.Edges.Weight)
+        title(sprintf("ID: P%d%d", problem.name), sprintf("Value = %d", value))
+        % log.debug("%s", formattedDisplayText(solution.allcycles))
 
     end
 

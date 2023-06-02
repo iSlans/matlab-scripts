@@ -57,11 +57,9 @@ function [upperEvalSolution, upperEvalValue] = minBranchAndBound( ...
         [subLowerEvalSolution, subLowerEvalValue] = lowerEvaluationFunction(subproblem);
 
         log.info("\n")
-        log.info("current upper value: %d \n", upperEvalValue)
         log.info("subproblem lower value: %d \n", subLowerEvalValue)
+        log.info("current upper value: %d \n", upperEvalValue)
         log.info("\n")
-
-        subproblem.lowerEvalValue = subLowerEvalValue;
 
         if subLowerEvalValue >= upperEvalValue
             log.info("cut subLowerEvalValue >= upperEvalValue\n")
