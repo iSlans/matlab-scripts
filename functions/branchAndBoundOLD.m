@@ -1,11 +1,12 @@
 % ------------------------------------ TSP ----------------------------------- %
 
-function [upperEvalSolution, upperEvalValue] = branchAndBound( ...
+function [upperEvalSolution, upperEvalValue] = branchAndBoundOLD( ...
         table, ...
         lowerEvaluationFunction, ...
         upperEvalSolution, upperEvalValue, ...
         isLowerEvalSolutionAdmissible, ...
         isProblemInadmissible, ...
+        branchingFunction, ...
         decision_priority)
 
     MAX_STEPS = 10;
@@ -20,7 +21,6 @@ function [upperEvalSolution, upperEvalValue] = branchAndBound( ...
 
     problem = struct();
     problem.table = table;
-    problem.lowerEvalValue = lowerEvalValue;
     % problem.upperEvalValue = upperEvalValue; % absolute upperEvalValue
     problem.lb = x_lowerbounds(:);
     problem.ub = x_upperbounds(:);
@@ -111,36 +111,11 @@ function [upperEvalSolution, upperEvalValue] = branchAndBound( ...
 
         disp("branching")
 
-        if isempty(subproblem.decision_priority)
-            continue
+        childProblems = branchingFunction(subproblem);
+
+        for i = 1:length(childProblems)
+            queue.push(childProblems{i});
         end
-
-        x_branching = subproblem.decision_priority(1);
-        subproblem.decision_priority(1) = [];
-
-        % child problems with x_branching = 0 | 1
-
-        % x value = 0, so for TSP is setting edge unselectable, with a heavy weight
-        t = subproblem.table;
-        t(x_branching) = nan;
-        t = (t + t') / 2;
-        t(isnan(t)) = 1e+4;
-        subproblem.table = t;
-        subproblem.lb(x_branching) = 0;
-        subproblem.ub(x_branching) = 0;
-
-        queue.push(subproblem);
-
-        % x value = 1, so for TSP is setting edge a must choice, with a weight = 0
-        t = subproblem.table;
-        t(x_branching) = nan;
-        t = (t + t') / 2;
-        t(isnan(t)) = 0.1;
-        subproblem.table = t;
-        subproblem.lb(x_branching) = 1;
-        subproblem.ub(x_branching) = 1;
-
-        queue.push(subproblem);
 
     end
 
@@ -160,7 +135,11 @@ function printProblem(p)
     t = formattedDisplayText(p.table, "NumericFormat", "shortG");
 
     fprintf("%s", t)
-    p.lowerEvalValue
+
+    if isfield(p, "lowerEvalValue")
+        p.lowerEvalValue
+    end
+
     printarr(p.lb)
     printarr(p.ub)
     p.decision_priority
