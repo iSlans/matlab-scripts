@@ -164,7 +164,7 @@ figure(Name = "ktree solutions")
 %   struct with fields:
 % 
 %                    id: 1
-%                  name: [0 1]
+%                  name: [0 1]              <------ node name, like P11, P12 ...
 %         originalTable: [5x5 double]
 %            ktreeTable: [5x5 double]
 %       assignmentTable: [5x5 double]
@@ -176,10 +176,10 @@ figure(Name = "ktree solutions")
 % 
 % subproblem seems admissible
 % 
-% subproblem lower value: 108 
-% current upper value: 111 
+% subproblem lower value: 108               <------ calculated lower evaluation (Vi)
+% current upper value: 111                  <------ current upper evaluation (Vs)
 % 
-% branching
+% branching                                 <------ action, it may be "branching" / "cut {reason}"
 % 
 % paused, press any key to proceed with step 2
 % ...
