@@ -1,8 +1,19 @@
-function [path, cost] = nearestNode(table, root)
+function [path, cost] = nearestNode(table, root, opt)
+    % heuristic algorithm
+    % upper bound evaluation for TSP problem
+    % return a admissible Hamilton cycle and the cost
+    %
 
     arguments
         table (:, :) %{MustBeSquareMatrix}
         root {mustBeNonnegative}
+        opt.isSymmetric = false
+    end
+
+    % check and warn if table is triangular
+
+    if opt.isSymmetric
+        table = table + table' + eye(size(table, 1)) * 1e+10 * max(table(:));
     end
 
     len = length(table);
