@@ -5,11 +5,20 @@ Ricerca Operativa - Ing. Informatica Unipi
 
 ⚠️ **in development ...**
 
+---
+
 ## Documentation  
 
 see [documentation.md](documentation.md)
 
+---
 ## Run Locally  
+
+#### Requirements
+
+- Matlab
+- Optimization toolbox
+- Symbolic toolbox
 
 Clone the project  
 
@@ -40,5 +49,3 @@ Try some my test scripts, in `/test` folder, open or try to run them. They are e
 >> run('./test/test_ktree.m')
 ~~~  
 
-## License  
-[MIT](https://choosealicense.com/licenses/mit/)  
