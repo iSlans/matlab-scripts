@@ -1,4 +1,4 @@
-function x = logging(mode)
+function [x, level] = logging(mode)
     % LOGGING set logging level
     % >> logging
     % >> logging info
@@ -10,6 +10,7 @@ function x = logging(mode)
 
     if nargin == 0
         x = log.setgetMode;
+        level = log.getLevels().(x);
         return
     end
 

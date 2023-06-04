@@ -84,7 +84,7 @@ function [y, x] = dualSimplex(c, A, b, baseIndex, opt)
 
     log.debug("DEBUG: b - AX = [ %s ] \n", toRationalString(primal_constraints))
     log.debug("DEBUG: A*Wh = [ %s ] \n", toRationalString(direction_vector))
-    log.debug("DEBUG: all ratios = [ %s ] \n", toRationalString(all_ratios))
+    log.debug("DEBUG: -y / (A*Wh) all ratios = [ %s ] \n", toRationalString(all_ratios))
 
     if (opt.currentDepth >= opt.depthLimit)
         log.info("Max depth reached: %d, stop simplex \n", opt.depthLimit)

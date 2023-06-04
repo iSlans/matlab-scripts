@@ -13,6 +13,7 @@ classdef log
         WARNING = 7
         INFO = 10
         DEBUG = 20
+        ALL = 100
     end
 
     methods (Static)

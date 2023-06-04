@@ -87,7 +87,9 @@ function cuts = gomory(c, A, b)
     log.info("\nGomory cuts, simplified: \n\n%s \n", formattedDisplayText(cuts))
 
     if logging == "DEBUG"
-        c, A, b, At, xbase, equations
+        r = find(baseIndex);
+        table(r, cuts)
+        c, A, b, At, x_relaxed, xbase, equations
     end
 
 end

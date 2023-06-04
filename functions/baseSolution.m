@@ -13,10 +13,11 @@ function x = baseSolution(A, b, baseIndex)
 
     % x = linsolve(Abase, bbase);
 
-    x = Abase \ bbase;
+    x = sym(Abase) \ sym(bbase)
+    % x = Abase \ bbase;
 
     % floating point round-off error, trying to cover it up
-    x = roundFloating(x);
+    % x = roundFloating(x);
 
 end
 
