@@ -53,7 +53,7 @@ function cuts = gomory(c, A, b)
     elseif ones_baseIndex < size(A, 1)
         log.info("Degenerate solution, using first index available \n")
         num_elem = size(A, 1) - ones_baseIndex;
-        baseIndex(find(baseIndex == 0, num_elem)) = true;
+        baseIndex(find(x_relaxed == 0, num_elem)) = true;
     end
 
     At = A(:, baseIndex) \ A(:, ~baseIndex);
@@ -65,7 +65,7 @@ function cuts = gomory(c, A, b)
     %                             Calculate Gomory cuts                            %
     % ---------------------------------------------------------------------------- %
 
-    syms("x", [size(A, 1) 1])
+    syms("x", [size(A, 2) - size(A, 1) 1])
     syms("e", [size(A, 1) 1])
 
     coeff = [x; e];

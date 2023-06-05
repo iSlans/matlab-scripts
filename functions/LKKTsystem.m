@@ -54,6 +54,7 @@ function solution = LKKTsystem(x, f, g, h)
         grad_lagrangian
         lambda .* g == 0
         h == 0
+        g <= 0
         ];
 
     solution = solve(system, 'Real', true);
@@ -69,7 +70,7 @@ function solution = LKKTsystem(x, f, g, h)
     end
 
     solution.f_value = table.f_value;
-    table
+    sortrows(table, "f_value")
 
     % open in live script to see latex formatted output
     t = struct2cell(solution);
