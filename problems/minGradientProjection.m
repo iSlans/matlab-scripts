@@ -11,10 +11,10 @@
 % b = [9 12 28 23]';
 
 % xk = [-1 -8/3]';
-% gradientProjection(x, f, A, b, xk)
+% minGradientProjection(x, f, A, b, xk)
 
-function gradientProjection(x, f, A, b, xk)
-    % min f
+function minGradientProjection(x, f, A, b, xk)
+    % objective min f
 
     arguments
         x
@@ -26,11 +26,11 @@ function gradientProjection(x, f, A, b, xk)
 
     grad_f = gradient(f, x);
 
-    V = A(A * xk == b, :);
-    H = eye(length(V)) - V' * (V * V') ^ -1 * V;
-    dk =- H * subs(grad_f, x, xk);
+    V = A(A * xk == b, :)
+    H = eye(length(V)) - V' * (V * V') ^ -1 * V
+    dk =- H * subs(grad_f, x, xk)
 
-    if all(dk ~= 0)
+    if any(dk ~= 0)
         dk = double(dk);
         maxt = linprog(-1, A * dk, b - A * xk);
 
@@ -45,9 +45,9 @@ function gradientProjection(x, f, A, b, xk)
         candidates = [0 candidate_t maxt];
         [~, min_idx] = min(arrayfun(handlef, candidates));
 
-        tk = candidates(min_idx);
+        tk = candidates(min_idx)
 
-        new_xk = xk + tk * dk;
+        new_xk = xk + tk * dk
 
     end
 

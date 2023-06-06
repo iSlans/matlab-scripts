@@ -89,7 +89,7 @@ function cuts = gomory(c, A, b)
     if logging == "DEBUG"
         r = find(baseIndex);
         table(r, cuts)
-        c, A, b, At, x_relaxed, xbase, equations
+        c, A, b, x_relaxed, xbase, At, equations
     end
 
 end

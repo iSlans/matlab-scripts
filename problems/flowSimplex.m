@@ -91,6 +91,8 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     reducedCost = cost + potential(src) - potential(dst);
     edgeTable = addvars(edgeTable, reducedCost);
 
+    % add potential admissibility, degenerate...
+
     % ---------------------------------------------------------------------------- %
     %                               bellman condition                              %
     % ---------------------------------------------------------------------------- %
