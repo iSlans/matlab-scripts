@@ -12,9 +12,9 @@ function [x, isrounded] = roundFloating(x)
 
         xtxt = sprintf("%.15f \n", x);
         rtxt = sprintf("%.15f \n", rounded);
-        log.debug("\n------------- WARNING -------------\n")
-        log.debug("the given value [ \n %s ] \nwill be rounded to [ \n %s ] \n ", xtxt, rtxt)
-        log.debug("-----------------------------------\n")
+        % log.debug("\n------------- WARNING -------------\n")
+        % log.debug("the given value [ \n %s ] \nwill be rounded to [ \n %s ] \n ", xtxt, rtxt)
+        % log.debug("-----------------------------------\n")
 
     end
 

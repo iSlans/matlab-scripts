@@ -1,10 +1,13 @@
 function [solution, val] = knapsackGreedy(value, weight, capacity)
+    % Knapsack problem greedy algorithm evaluation by value/weight ratio
 
     arguments
         value (:, 1)
         weight (:, 1)
         capacity (1, 1)
     end
+
+    assert(length(value) == length(weight))
 
     efficiencyRatio = value ./ weight;
     solution = zeros(size(value));

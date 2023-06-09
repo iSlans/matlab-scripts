@@ -1,6 +1,4 @@
 function cuts = gomory(c, A, b)
-    % NEED Symbolic Matlab Toolbox
-    % >> license("checkout", "symbolic_toolbox")
     %
     % Gomory cutting plane
     % c, A, b in dual form
@@ -24,9 +22,12 @@ function cuts = gomory(c, A, b)
     end
 
     % need e variables in objective for linprog
-    if length(c) < size(A, 2)
-        c(end + 1:size(A, 2)) = 0;
+    if length(c) < width(A)
+        c(end + 1:width(A)) = 0;
     end
+
+    assert(length(c) == width(A), "length(c) != width(A)")
+    assert(length(b) == height(A), "length(b) != height(A)")
 
     % ---------------------------------------------------------------------------- %
     %                             Find relaxed optimum                             %
@@ -35,31 +36,32 @@ function cuts = gomory(c, A, b)
     ub = c * 0;
     x_relaxed = linprog(c, [], [], A, b, ub, []);
 
-    log.info("Relaxed optimum solution: \n\t [ %s ] \n", join(string(x_relaxed), " "))
+    log.info("Relaxed optimum solution x: \n\t [ %s ] \n", join(string(x_relaxed), " "))
 
     % ---------------------------------------------------------------------------- %
     %                          Calculate fractional coeff                          %
     % ---------------------------------------------------------------------------- %
 
-    fractional = @(x) frac(sym(x));
-    baseIndex = fractional(x_relaxed) ~= 0;
-    baseIndex = logical(baseIndex);
+    fractional = @(x) sym(x) - floor(sym(x));
+    baseIndex = logical(fractional(x_relaxed) ~= 0);
 
-    ones_baseIndex = sum(baseIndex == 1);
+    fractional_base_indices = sum(baseIndex == 1);
 
-    if ones_baseIndex == 0
+    if fractional_base_indices == 0
         log.info("Already integer solution \n")
         return
-    elseif ones_baseIndex < size(A, 1)
+    elseif fractional_base_indices < size(A, 1)
         log.info("Degenerate solution, using first index available \n")
-        num_elem = size(A, 1) - ones_baseIndex;
+        num_elem = size(A, 1) - fractional_base_indices;
         baseIndex(find(x_relaxed == 0, num_elem)) = true;
     end
 
-    At = A(:, baseIndex) \ A(:, ~baseIndex);
+    Ab = A(:, baseIndex)
+    An = A(:, ~baseIndex)
+    At = A(:, baseIndex) \ A(:, ~baseIndex)
 
-    At = fractional(At);
-    xbase = fractional(x_relaxed(baseIndex));
+    fractional_At = fractional(At)
+    fractional_xbase = fractional(x_relaxed(baseIndex))
 
     % ---------------------------------------------------------------------------- %
     %                             Calculate Gomory cuts                            %
@@ -70,9 +72,9 @@ function cuts = gomory(c, A, b)
 
     coeff = [x; e];
 
-    cuts = (At * coeff(~baseIndex)) - xbase >= 0;
+    cuts = (fractional_At * coeff(~baseIndex)) - fractional_xbase >= 0;
 
-    log.info("\nGomory cuts, raws with slack variables e: \n\n%s \n", formattedDisplayText(cuts * -1))
+    log.info("\nGomory cuts, raws with slack variables e: \n\n%s \n", formattedDisplayText(cuts))
 
     % ------------------------ substitute slack variables ------------------------ %
     equations = A * coeff == b;
@@ -85,11 +87,7 @@ function cuts = gomory(c, A, b)
     cuts = simplify(cuts * -1);
 
     log.info("\nGomory cuts, simplified: \n\n%s \n", formattedDisplayText(cuts))
-
-    if logging == "DEBUG"
-        r = find(baseIndex);
-        table(r, cuts)
-        c, A, b, x_relaxed, xbase, At, equations
-    end
+    r = find(baseIndex);
+    table(r, cuts)
 
 end
