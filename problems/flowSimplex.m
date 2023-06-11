@@ -63,7 +63,6 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     partition(indexL) = '     L ';
 
     edgeTable = table(edge_ij, src, dst, cost, capacity, partition);
-    edgeTable.newPartition(:, 1) = strtrim(edgeTable.partition);
 
     % ---------------------------------------------------------------------------- %
     %                               calculate base x                               %
@@ -143,8 +142,8 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     edgeTable.theta(c_plus_index) = edgeTable{c_plus_index, "capacity"} - edgeTable{c_plus_index, "flow"};
     edgeTable.theta(c_minus_index) = edgeTable{c_minus_index, "flow"};
 
-    theta_plus = edgeTable{c_plus_index, "theta"};
-    theta_minus = edgeTable{c_minus_index, "theta"};
+    theta_plus = edgeTable{c_plus_index, "theta"}
+    theta_minus = edgeTable{c_minus_index, "theta"}
 
     theta = min([Inf min(theta_plus) min(theta_minus)]);
 
@@ -160,6 +159,8 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     % ---------------------------------------------------------------------------- %
     %                               update tripartion                              %
     % ---------------------------------------------------------------------------- %
+    edgeTable.newPartition(:, 1) = strtrim(edgeTable.partition);
+
     entering_idx = edgeTable.src == entering.src & edgeTable.dst == entering.dst;
     exiting_idx = edgeTable.src == exiting.src & edgeTable.dst == exiting.dst;
 
@@ -242,4 +243,8 @@ function [c_plus, c_minus] = findCycle(cycleDigraph, entering)
 
     c_plus = cycle_edges(c_plus_index, :);
     c_minus = cycle_edges(~c_plus_index, [2 1]);
+
+    % p = plot(cycleDigraph)
+    % highlight(p, c_plus(:, 1), c_plus(:, 2))
+
 end

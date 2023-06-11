@@ -14,7 +14,7 @@
 % edges = edges(:, [1 2 3]);
 % root = 1;
 
-% dijkstra(edges, root)
+% dijkstra(edges)
 
 function dijkstra(edges, root)
 
@@ -27,8 +27,7 @@ function dijkstra(edges, root)
     dst = edges(:, 2);
     cost = edges(:, 3);
 
-    nodes = unique([src dst]);
-
+    nodes = sort(unique([src dst]));
     predecessor = zeros(size(nodes));
     potential = Inf * ones(size(nodes));
 
@@ -71,6 +70,6 @@ function dijkstra(edges, root)
     sequence_table.predecessor = predecessor;
     sequence_table
 
-    shortest_path_tree_edges = [predecessor(1:end) nodes(1:end)]
+    shortest_path_tree_edges = [predecessor(2:end) nodes(2:end)]
 
 end

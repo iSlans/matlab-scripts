@@ -25,6 +25,7 @@ function minGradientProjection(x, f, A, b, xk)
     end
 
     grad_f = gradient(f, x);
+    grad_f_xk = subs(grad_f, x, xk)
 
     V = A(A * xk == b, :)
     H = eye(length(V)) - V' * (V * V') ^ -1 * V

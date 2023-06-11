@@ -14,9 +14,6 @@ function polygonContraints (points)
     middle = mean(points);
     middle = middle(:);
 
-    % RicOp.vert2con(points)
-    % return
-
     order = convhull(points);
     vertices = points(order, :);
 
