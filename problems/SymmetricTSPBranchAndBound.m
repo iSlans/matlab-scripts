@@ -73,7 +73,7 @@ function [sol, val] = SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_
 
         old_logging = logging;
         logging warning
-        [relaxed_sol, relaxed_sol_value] = assignmentSymmetric(table, lb, ub);
+        [relaxed_sol, relaxed_sol_value] = relaxedSymmetricTSP(table, lb, ub);
         logging(old_logging)
 
         if isempty(relaxed_sol)

@@ -1,4 +1,4 @@
-function [x, fval] = assignmentSymmetric(table, lb, ub)
+function [x, fval] = relaxedSymmetricTSP(table, lb, ub)
     % ASSIGNMENT
     %   helper function for symmetric TSP inadmissibility check in branch&bound
     %   table: assignment cost table, upper triangular

@@ -64,10 +64,12 @@ table = [
     0 0 0 0 0
     ]
 
+assignment(table + table' + eye(width(table)) * 10000)
+
 % [g, v] = ktree(table, 2)
 % plot(g)
 
-% [x, v] = assignmentSymmetric(table)
+[x, v] = relaxedSymmetricTSP(table)
 
 % x = reshape(x, 5, 5)
 
@@ -106,7 +108,7 @@ t = [
 
 u = [3 4];
 
-flowSimplex(b, ed, t, u)
+% flowSimplex(b, ed, t, u)
 b = [-5 1 1 1 1 1]
 % flowSimplex(b, ed, t, u)
 
@@ -138,8 +140,10 @@ A = [
 b = [6 12 4 2]';
 
 % minFrankWolfe(x, minf, A, b, [1 2])
-
+format rat
 % minGradientProjection(x, minf, A, b, [1 2])
+
+% RicOp.gradienteProiettato(minf,A,b, [1 ; 2],1)
 
 % gradient(minf)
 
