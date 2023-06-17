@@ -18,24 +18,41 @@
 
 function fordFulkerson(edges, root, destination)
 
+    arguments
+        edges
+        root (1, 1)
+        destination (1, 1)
+    end
+
+    if width(edges) == 4
+        edges = edges(:, [1 2 4]);
+    end
+
+    assert(width(edges) == 3)
+
     x = zeros(length(edges), 1);
 
     while true
 
-        residual_edges = residualGraph(edges, x)
+        residual_edges = residualGraph(edges, x);
 
-        [path_edges, maxflow, ns, nt] = augmentingPath(residual_edges, root, destination);
+        [path_edges, path_flow, ns, nt] = augmentingPath(residual_edges, root, destination);
 
         if isnan(path_edges)
             ns, nt
+
+            idx = ismember(edges(:, 1), ns) & ismember(edges(:, 2), nt);
+            ns_nt_edges = edges(idx, :)
+            maxflow = sum(edges(idx, 3))
+
             break
         else
             path_edge_idx = ismember(edges(:, [1 2]), path_edges, "rows");
-            x(path_edge_idx) = x(path_edge_idx) + maxflow;
+            x(path_edge_idx) = x(path_edge_idx) + path_flow;
 
             path_edge_idx = ismember(edges(:, [2 1]), path_edges, "rows");
-            x(path_edge_idx) = x(path_edge_idx) - maxflow;
-            x
+            x(path_edge_idx) = x(path_edge_idx) - path_flow;
+            % x
         end
 
     end
@@ -62,7 +79,7 @@ function residualEdges = residualGraph(edges, flow)
 
 end
 
-function [path_edges, max_flow, ns, nt] = augmentingPath(edges, s, t)
+function [path_edges, path_flow, ns, nt] = augmentingPath(edges, s, t)
     % input edges : [src dst capacity]
 
     src = edges(:, 1);
@@ -100,7 +117,7 @@ function [path_edges, max_flow, ns, nt] = augmentingPath(edges, s, t)
     predecessor
 
     path_edges = nan;
-    max_flow = nan;
+    path_flow = nan;
     ns = nan;
     nt = nan;
 
@@ -118,11 +135,11 @@ function [path_edges, max_flow, ns, nt] = augmentingPath(edges, s, t)
             path = [k; path];
         end
 
-        path
+        augmenting_path = path
 
-        path_edges = [path(1:end - 1) path(2:end)]
-        path_capac = capacity(ismember(src, path_edges(:, 1)) & ismember(dst, path_edges(:, 2)))
-        max_flow = min(path_capac)
+        path_edges = [path(1:end - 1) path(2:end)];
+        path_edges_capacity = capacity(ismember(src, path_edges(:, 1)) & ismember(dst, path_edges(:, 2)))
+        path_flow = min(path_edges_capacity)
 
     end
 

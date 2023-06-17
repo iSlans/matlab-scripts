@@ -5,7 +5,7 @@
 %     -1 1
 %     ];
 
-function polygonContraints (points)
+function [A, b] = polygonContraints (points)
 
     arguments
         points (:, 2)
@@ -20,6 +20,7 @@ function polygonContraints (points)
     syms x y
 
     eqs = [];
+    % equalities = [];
 
     for i = 1:length(vertices) - 1
         p1 = vertices(i, :);
@@ -29,8 +30,10 @@ function polygonContraints (points)
 
             if middle(1) < p1(1)
                 eqs = [eqs; x <= p1(1)];
+                % equalities = [equalities; x - p1(1) == 0];
             else
                 eqs = [eqs; x >= p1(1)];
+                % equalities = [equalities; -x + p1(1) == 0];
             end
 
             continue
@@ -50,15 +53,24 @@ function polygonContraints (points)
             assert(den > 0)
             eq =- a * x + y -b <= 0;
             eq = eq * den;
+            % equalities = [equalities; (- a * x + y - b) * den == 0];
         else
             [~, den] = numden(a * x - y +b);
             assert(den > 0)
             eq = a * x - y +b <= 0;
             eq = eq * den;
+            % equalities = [equalities; (a * x - y + b) * den == 0];
         end
 
         eqs = [eqs; simplify(eq)];
     end
 
     eqs
+
+    eqToMatrix = arrayfun(@(eq) lhs(eq) == rhs(eq), eqs);
+    [A, b] = equationsToMatrix(eqToMatrix, [x y])
+
+    A = double(A);
+    b = double(b);
+
 end

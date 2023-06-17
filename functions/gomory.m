@@ -36,6 +36,7 @@ function cuts = gomory(c, A, b)
     ub = c * 0;
     x_relaxed = linprog(c, [], [], A, b, ub, []);
 
+    x_relaxed
     log.info("Relaxed optimum solution x: \n\t [ %s ] \n", join(string(x_relaxed), " "))
 
     % ---------------------------------------------------------------------------- %
@@ -76,7 +77,10 @@ function cuts = gomory(c, A, b)
 
     log.info("\nGomory cuts, raws with slack variables e: \n\n%s \n", formattedDisplayText(cuts))
 
-    % ------------------------ substitute slack variables ------------------------ %
+    % ---------------------------------------------------------------------------- %
+    %                          substitute slack variables                          %
+    % ---------------------------------------------------------------------------- %
+
     equations = A * coeff == b;
 
     for i = 1:length(e)
@@ -86,8 +90,7 @@ function cuts = gomory(c, A, b)
     cuts = subs(cuts, lhs(equations), rhs(equations));
     cuts = simplify(cuts * -1);
 
-    log.info("\nGomory cuts, simplified: \n\n%s \n", formattedDisplayText(cuts))
     r = find(baseIndex);
-    table(r, cuts)
+    log.info("\nGomory cuts, simplified: \n\n%s \n", formattedDisplayText(table(r, cuts), "SuppressMarkup", true))
 
 end

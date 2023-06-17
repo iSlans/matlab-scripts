@@ -77,20 +77,39 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     xbase(indexT) = ET \ (b - EU * capacity(indexU));
     xbase(indexU) = capacity(indexU);
 
-    flow = xbase
+    flow = xbase;
+    log.info("flow = %s \n", toString(flow))
 
     edgeTable = addvars(edgeTable, flow);
 
     % ---------------
     % degenerate flow
-    degenerate = any(xbase(indexT) == 0)
+    degenerate = any(flow(indexT) == 0 | flow(indexT) == capacity(indexT))
+    degenerateFlow = indexT & ((flow == 0) | (flow == capacity));
+    admissibleFlow = indexT & ((flow <= capacity) & (flow >= 0));
+    admissibleFlow(~indexT) = true;
+
+    degenerateFlowTable = table(edge_ij, flow, capacity, partition, admissibleFlow, degenerateFlow)
+
     % ---------------
 
-    potential = [0, cost(indexT)' / ET(2:end, :)]'
+    potential = [0, cost(indexT)' / ET(2:end, :)]';
+    log.info("potential = %s \n", toString(potential))
+
     reducedCost = cost + potential(src) - potential(dst);
     edgeTable = addvars(edgeTable, reducedCost);
 
     % add potential admissibility, degenerate...
+
+    admissiblePotential = (indexL & reducedCost >= 0) | (indexU & reducedCost <= 0);
+    admissiblePotential = logical(admissiblePotential);
+    admissiblePotential(indexT) = true;
+
+    degeneratePotential = (indexL & reducedCost == 0) | (indexU & reducedCost == 0);
+    degeneratePotential = logical(degeneratePotential);
+    degeneratePotential(indexT) = false;
+
+    degeneratePotentialTable = table(edge_ij, reducedCost, partition, admissiblePotential, degeneratePotential)
 
     % ---------------------------------------------------------------------------- %
     %                               bellman condition                              %
@@ -134,7 +153,7 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     c_plus_index = ismember(edgeTable.edge_ij, c_plus, "rows");
     c_minus_index = ismember(edgeTable.edge_ij, c_minus, "rows");
 
-    edgeTable.cycle(:, 1) = "";
+    edgeTable.cycle(:, 1) = "  ";
     edgeTable.cycle(c_plus_index) = "C+";
     edgeTable.cycle(c_minus_index) = "C-";
 
@@ -142,10 +161,10 @@ function [flow, potential] = flowSimplex(b, edges, T, U)
     edgeTable.theta(c_plus_index) = edgeTable{c_plus_index, "capacity"} - edgeTable{c_plus_index, "flow"};
     edgeTable.theta(c_minus_index) = edgeTable{c_minus_index, "flow"};
 
-    theta_plus = edgeTable{c_plus_index, "theta"}
-    theta_minus = edgeTable{c_minus_index, "theta"}
+    theta_plus = min(edgeTable{c_plus_index, "theta"})
+    theta_minus = min(edgeTable{c_minus_index, "theta"})
 
-    theta = min([Inf min(theta_plus) min(theta_minus)]);
+    theta = min([Inf theta_plus theta_minus]);
 
     if isinf(theta)
         "optimum is -Inf"
@@ -247,4 +266,8 @@ function [c_plus, c_minus] = findCycle(cycleDigraph, entering)
     % p = plot(cycleDigraph)
     % highlight(p, c_plus(:, 1), c_plus(:, 2))
 
+end
+
+function str = toString(x)
+    str = sprintf("[ %s ]", join(string(x), " "));
 end

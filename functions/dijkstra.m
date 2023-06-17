@@ -19,9 +19,15 @@
 function dijkstra(edges, root)
 
     arguments
-        edges (:, 3)
+        edges
         root = 1
     end
+
+    if width(edges) == 4
+        edges = edges(:, [1 2 3]);
+    end
+
+    assert(width(edges) == 3)
 
     src = edges(:, 1);
     dst = edges(:, 2);
@@ -70,6 +76,7 @@ function dijkstra(edges, root)
     sequence_table.predecessor = predecessor;
     sequence_table
 
-    shortest_path_tree_edges = [predecessor(2:end) nodes(2:end)]
+    shortest_path_tree_edges = [predecessor(2:end) nodes(2:end)];
+    shortest_path_tree_edges = sortrows(shortest_path_tree_edges)
 
 end
