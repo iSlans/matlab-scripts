@@ -64,12 +64,12 @@ table = [
     0 0 0 0 0
     ]
 
-assignment(table + table' + eye(width(table)) * 10000)
+% assignment(table + table' + eye(width(table)) * 10000)
 
 % [g, v] = ktree(table, 2)
 % plot(g)
 
-[x, v] = relaxedSymmetricTSP(table)
+% [x, v] = relaxedSymmetricTSP(table)
 
 % x = reshape(x, 5, 5)
 
@@ -109,7 +109,10 @@ t = [
 u = [3 4];
 
 % flowSimplex(b, ed, t, u)
-b = [-5 1 1 1 1 1]
+
+dijkstra(ed(:, [1 2 3]), 1)
+
+% b = [-5 1 1 1 1 1]
 % flowSimplex(b, ed, t, u)
 
 % g = digraph(ed(:, 1), ed(:, 2), ed(:, 3));
@@ -119,6 +122,7 @@ b = [-5 1 1 1 1 1]
 % % g = digraph(ed(:, 1), ed(:, 2), ed(:, 4));
 
 % % [maxf, gg, ns, nd] = g.maxflow(1, 6)
+fordFulkerson(ed(:, [1 2 4]), 1, 6)
 
 syms x [2 1]
 
