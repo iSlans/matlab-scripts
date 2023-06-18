@@ -42,9 +42,9 @@ g = A * x - b;
 
 % ----------------------------------- plot ----------------------------------- %
 
-% fsurf(minf)
+% fsurf(f)
 
-% fmesh(minf, "FaceAlpha", 0, "MeshDensity", 20)
+% fmesh(f, "FaceAlpha", 0, "MeshDensity", 20)
 % hold on
-% plotSurfOnPolygon(minf, points);
+% plotSurfOnPolygon(f, points);
 % hold off

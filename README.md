@@ -1,5 +1,5 @@
  
-## Matlab Scripts per Ricerca Operativa
+# Matlab Scripts per Ricerca Operativa
 Scripts per risolvere i problemi di 
 Ricerca Operativa - Ing. Informatica Unipi   
 
@@ -7,7 +7,7 @@ Ricerca Operativa - Ing. Informatica Unipi
 
 ---
 
-## What you may be interested...
+# What you may be interested...
 
 - PL / PLI
   - Primal and dual base solutions
@@ -16,28 +16,36 @@ Ricerca Operativa - Ing. Informatica Unipi
   - Dual simplex, step by step
   - K-Tree
   - Gomory plane cuts
-  - TSP branch & bound, step by step
+  - Symmetric TSP branch & bound, step by step
   - Nearest Node tree greedy algorithm
   - ...
 
 - PLR
   - Flow simplex, step by step
-  - ...
+  - Min path Dijkstra
+  - Max flow Ford Fulkerson
 
 - PNL
   - LKKT
-  - ...
+  - Frank Wolfe
+  - Projected Gradient
+  - Plot functions surface on polygon region
+  - Plot functions surface on non-linear constraint region
 
----
+## images
 
-## Documentation  
+- Plotting surface on region
+![plot img](img/plotOnPolygon.png) 
+![plot img](img/plotOnConstraints.png)
+# Documentation  
 
+**in development ...** 
 see [documentation.md](documentation.md)
 
----
-## Run Locally  
 
-### ⚠️ Requirements
+# Run Locally  
+
+## ⚠️ Requirements
 
 - Matlab
 - Optimization toolbox
