@@ -1,5 +1,16 @@
 function p = plotSurfOnPolygon(f, points)
 
+    % Example
+    % syms x [2 1]
+    % f = -2 * x1 ^ 2 -6 * x1 * x2 -10 * x1 - 3 * x2;
+    % vertices = [
+    %     -2 2
+    %     4 2
+    %     4 0
+    %     0 -3
+    % ];
+    % plotSurfOnPolygon(f, vertices);
+
     arguments
         f
         points (:, 2)
@@ -7,10 +18,10 @@ function p = plotSurfOnPolygon(f, points)
 
     mf = matlabFunction(f);
 
-    toOneOrNan = @(x) x ./ x;
-    inpoly = @(x, y) inpolygon(x, y, points(:, 1), points(:, 2));
+    zeroToNan = @(x) x ./ x;
+    isInPolygon = @(x, y) inpolygon(x, y, points(:, 1), points(:, 2));
 
-    f = @(x, y) mf(x, y) .* toOneOrNan(inpoly(x, y));
+    f = @(x, y) mf(x, y) .* zeroToNan(isInPolygon(x, y));
     p = fsurf(f);
 
 end

@@ -3,10 +3,14 @@ function [restricted, plotSurf] = plotSurfOnContraints(f, g, h)
     %  f
     %  g <= 0
     %  h == 0
+
+    % Example
+    % f = x2 - x1 ^ 2 + x1 * x2;
+    % g =- x1 ^ 2 - (x2 - 1) ^ 2 + 1;
+    % plotSurfOnContraints(f, g)
     %
     % it does not work well with h == 0 constraints as it is only a curve line,
     % you can pass for example 'fix(h)' as parameter to make it as a region
-    %
     % EX.
     % h = x1 ^ 2 + x2 ^ 2 - 16;
     % plotSurfOnContraints(f, [], fix(h))
@@ -17,14 +21,9 @@ function [restricted, plotSurf] = plotSurfOnContraints(f, g, h)
         h (1, :) = sym(0)
     end
 
-    g = unique(g);
-    h = unique(h);
-
     if isempty(g)
         g = sym(0);
     end
-
-    x = getVars([f, g, h]);
 
     checkG = 1;
     checkH = 1;
@@ -37,6 +36,7 @@ function [restricted, plotSurf] = plotSurfOnContraints(f, g, h)
         checkH = checkH & (h(i) == 0);
     end
 
+    x = getVars([f, g, h]);
     mf = matlabFunction(f, vars = x);
     checkG = matlabFunction(checkG, vars = x);
     checkH = matlabFunction(checkH, vars = x);

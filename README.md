@@ -35,11 +35,13 @@ Ricerca Operativa - Ing. Informatica Unipi
 ## images
 
 - Plotting surface on region
+
 ![plot img](img/plotOnPolygon.png) 
 ![plot img](img/plotOnConstraints.png)
 # Documentation  
 
-**in development ...** 
+**in development ...**
+
 see [documentation.md](documentation.md)
 
 
