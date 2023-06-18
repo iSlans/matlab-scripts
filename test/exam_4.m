@@ -48,3 +48,5 @@ g = A * x - b;
 % hold on
 % plotSurfOnPolygon(f, points);
 % hold off
+
+% plotSurfOnContraints(f, g)
