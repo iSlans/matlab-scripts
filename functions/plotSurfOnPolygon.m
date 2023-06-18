@@ -16,6 +16,9 @@ function p = plotSurfOnPolygon(f, points)
         points (:, 2)
     end
 
+    order = convhull(points);
+    points = points(order, :);
+
     mf = matlabFunction(f);
 
     zeroToNan = @(x) x ./ x;
