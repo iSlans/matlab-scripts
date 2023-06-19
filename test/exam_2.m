@@ -22,6 +22,7 @@ table = [
 % g = digraph(assignment_x);
 % plot(g)
 
+%%
 % -------------------------------- evaluations ------------------------------- %
 
 % root = 2
@@ -30,6 +31,7 @@ table = [
 
 % [x, v] = nearestNode(table, root, isSymmetric = true)
 
+%%
 % ----------------------------- branch and bound ----------------------------- %
 
 decision_order = [

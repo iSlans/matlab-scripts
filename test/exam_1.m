@@ -5,8 +5,8 @@ format rational
 logging all
 % logging debug
 
+%%
 % ---------------------------------- simplex --------------------------------- %
-
 c = [30 30 35 35];
 A = [
     5 0 7 0
@@ -27,6 +27,7 @@ baseIndex = find(A * initial_x' == b');
 % primalSimplex(c, A, b, [2 3 6 7])
 % primalSimplex(c, A, b, baseIndex, depthLimit = 2
 
+%%
 % ---------------------------------- gomory ---------------------------------- %
 
 % c =- [30 30 35 35 0 0 0 0];
@@ -53,6 +54,7 @@ baseIndex = find(A * initial_x' == b');
 % ub = [];
 % linprog(-c, A, b, [], [], lb, ub)
 
+%%
 % ---------------------------- optimal intlinprog ---------------------------- %
 
 % c = [30 30 35 35];
