@@ -34,12 +34,17 @@ xk = [1 2]';
 % minFrankWolfe(x, minf, A, b, xk)
 % minGradientProjection(x, minf, A, b, xk)
 
+%%
 % ----------------------------------- lkkt ----------------------------------- %
 
 g = A * x - b;
 
+sympref('FloatingPointOutput', true)
+% sympref('FloatingPointOutput', false)
+
 % LKKTsystem(x, minf, g)
 
+%%
 % ----------------------------------- plot ----------------------------------- %
 
 % fsurf(f)
@@ -49,4 +54,4 @@ g = A * x - b;
 % plotSurfOnPolygon(f, points);
 % hold off
 
-% plotSurfOnContraints(f, g)
+% plotSurfOnContraints(f, g, fmesh=true)

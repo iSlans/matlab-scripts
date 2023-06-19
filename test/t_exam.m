@@ -21,9 +21,9 @@ A = [
     0 5 0 7 0 1 0 0
     1 1 0 0 0 0 1 0
     0 0 1 1 0 0 0 1
-    ]
+    ];
 b = [119 91 23 15];
-ub = [0 0 0 0 0 0 0 0]
+ub = [0 0 0 0 0 0 0 0];
 
 % gomory(c, A, b)
 
@@ -62,7 +62,7 @@ table = [
     0 0 0 20 19
     0 0 0 0 14
     0 0 0 0 0
-    ]
+    ];
 
 % assignment(table + table' + eye(width(table)) * 10000)
 
@@ -81,7 +81,7 @@ d = [
     2 4
     2 5
     4 5
-    ]
+    ];
 
 % SymmetricTSPBranchAndBound(table, 2, 2, d)
 
@@ -110,7 +110,7 @@ u = [3 4];
 
 % flowSimplex(b, ed, t, u)
 
-dijkstra(ed(:, [1 2 3]), 1)
+% dijkstra(ed(:, [1 2 3]), 1)
 
 % b = [-5 1 1 1 1 1]
 % flowSimplex(b, ed, t, u)
@@ -122,7 +122,9 @@ dijkstra(ed(:, [1 2 3]), 1)
 % % g = digraph(ed(:, 1), ed(:, 2), ed(:, 4));
 
 % % [maxf, gg, ns, nd] = g.maxflow(1, 6)
-fordFulkerson(ed(:, [1 2 4]), 1, 6)
+% fordFulkerson(ed(:, [1 2 4]), 1, 6)
+
+%%
 
 syms x [2 1]
 
@@ -151,8 +153,13 @@ format rat
 
 % gradient(minf)
 
-g = A * x - b
+g = A * x - b;
 
-% LKKTsystem(x, minf, g)
+LKKTsystem(x, minf, g);
+% RicOp.LKKT(minf, g);
 
 % % fsurf(matlabFunction(minf))
+
+plotSurfOnContraints(minf, g, fmesh = true)
+
+eig(hessian(x2 - x1 ^ 2))

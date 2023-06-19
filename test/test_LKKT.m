@@ -1,3 +1,8 @@
+sympref('FloatingPointOutput', true)
+% sympref('FloatingPointOutput', false)
+
+% ------------------------------------ -- ------------------------------------ %
+
 syms x [2 1]
 f = x1 + x2;
 g = [x1 ^ 2 + x2 ^ 2 - 2];
@@ -48,7 +53,86 @@ A = [
     ];
 b = [9 12 28 23]';
 
-g = A * x - b
-sol = LKKTsystem(x, f, g);
+g = A * x - b;
+% sol = LKKTsystem(x, f, g);
 
-RicOp.LKKT(f, g)
+% RicOp.LKKT(f, g)
+
+% ---------------- ------------------------------------------- --------------- %
+%%
+
+sympref('FloatingPointOutput', true)
+% sympref('FloatingPointOutput', false)
+
+syms x [2 1]
+f = x1 + x2;
+g = [
+    x1 ^ 2 + x2 ^ 2 - 4
+    1 - x1 ^ 2 - x2 ^ 2
+    ];
+
+% s = LKKTsystem(x, f, g);
+
+syms x [2 1]
+f = x1 + x2;
+g = [
+    x1 ^ 2 + x2 ^ 2 - 4
+    1 - x1 ^ 2 - x2 ^ 2
+    ];
+
+s = LKKTsystem(x, f, g);
+
+%%
+syms x [2 1]
+f = x1 * x2;
+g = [
+    x1 ^ 2 + x2 ^ 2 - 8
+    ];
+
+LKKTsystem(x, f, g);
+
+%%
+
+syms x [2 1]
+f = x1 ^ 2 + x2 ^ 2 - 4 * x1 - 2 * x2;
+g = [
+    x1 ^ 2 + 4 * x2 ^ 2 - 4 * x1 - 8 * x2 + 4
+    x1 - 2
+    ];
+
+LKKTsystem(x, f, g);
+
+%%
+
+sympref('FloatingPointOutput', true)
+% sympref('FloatingPointOutput', false)
+
+syms x [2 1]
+f = x1 - x2 ^ 2;
+h = [
+    4 * x1 ^ 2 + x2 ^ 2 - 4
+    ];
+
+LKKTsystem(x, f, [], h);
+
+%%
+
+syms x [2 1]
+f = x1 ^ 4 + x2 ^ 4;
+h = [
+    x1 ^ 2 + x2 ^ 2 - 1
+    ];
+
+LKKTsystem(x, f, [], h);
+
+%%
+
+syms x [2 1]
+f = x1 ^ 2 - x1 * x2;
+g = [
+    x1 + x2 - 1
+    -x1
+    -x2
+    ];
+
+% LKKTsystem(x, f, g);

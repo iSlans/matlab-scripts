@@ -61,9 +61,12 @@ function solution = LKKTsystem(x, f, g, h)
 
     table = struct2table(solution);
 
+    table = mergevars(table, string(x), "NewVariableName", "x");
+    table = mergevars(table, string(lambda), "NewVariableName", "lambda");
+    table = mergevars(table, string(mu), "NewVariableName", "mu");
+
     symvars = symvar(f);
-    x_values = table{:, string(symvars)};
-    % table.x(:, 1:length(symvars)) = x_values;
+    x_values = table{:, "x"};
 
     for i = 1:height(x_values)
         table.f_value(i, 1) = subs(f, symvars, x_values(i, :));
@@ -76,6 +79,7 @@ function solution = LKKTsystem(x, f, g, h)
     t = struct2cell(solution);
     t = [t{:}];
 
+    solution = table;
 end
 
 function sum = sumMultiplierGradients(multiplier, gradients)
