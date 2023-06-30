@@ -73,7 +73,7 @@ function solution = LKKTsystem(x, f, g, h)
     end
 
     solution.f_value = table.f_value;
-    sortrows(table, "f_value")
+    table = sortrows(table, "f_value");
 
     % open in live script to see latex formatted output
     t = struct2cell(solution);

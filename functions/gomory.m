@@ -36,8 +36,8 @@ function cuts = gomory(c, A, b)
     ub = c * 0;
     x_relaxed = linprog(c, [], [], A, b, ub, []);
 
-    x_relaxed
     log.info("Relaxed optimum solution x: \n\t [ %s ] \n", join(string(x_relaxed), " "))
+    x_relaxed
 
     % ---------------------------------------------------------------------------- %
     %                          Calculate fractional coeff                          %

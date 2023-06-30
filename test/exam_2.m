@@ -8,10 +8,10 @@ logging all
 % ------------------------------------- - ------------------------------------ %
 
 table = [
-    0 23 18 17 21
-    0 0 22 16 16
-    0 0 0 20 19
-    0 0 0 0 14
+    0 15 17 35 19
+    0 0 21 36 22
+    0 0 0 23 20
+    0 0 0 0 18
     0 0 0 0 0
     ];
 
@@ -25,22 +25,22 @@ table = [
 %%
 % -------------------------------- evaluations ------------------------------- %
 
-% root = 2
+% root = 5
 % [g, v] = ktree(table, root)
 % plot(g)
 
-% [x, v] = nearestNode(table, root, isSymmetric = true)
+% [x, v] = nearestNode(table, 3, isSymmetric = true)
 
 %%
 % ----------------------------- branch and bound ----------------------------- %
 
 decision_order = [
+    1 2
+    1 4
     2 4
-    2 5
-    4 5
     ];
 
-KTREE_ROOT = 2;
-NEARESTNODE_ROOT = 2;
+KTREE_ROOT = 5;
+NEARESTNODE_ROOT = 3;
 
-% SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_ROOT, decision_order)
+SymmetricTSPBranchAndBound(table, NEARESTNODE_ROOT, KTREE_ROOT, decision_order)

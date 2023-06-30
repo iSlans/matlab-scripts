@@ -9,40 +9,52 @@ logging all
 
 syms x [2 1]
 
-f = -2 * x1 ^ 2 -6 * x1 * x2 -10 * x1 - 3 * x2;
+f = 2 * x1 * x2 + 4 * x1 + x2;
 minf = f;
 
 points = [
-    -2 2
-    4 2
-    4 0
-    0 -3
+    1 0
+    -5 -1
+    -5 -3
+    -1 -3
     ];
 
-% polygonContraints(points);
+polygonContraints(points);
+
+%%
 
 A = [
-    -5 -2
-    3 -4
-    1 0
-    0 1
+    -1 6
+    -1 0
+    0 -1
+    3 -2
     ];
-b = [6 12 4 2]';
+b = [-1 5 3 3]';
 
-xk = [1 2]';
+xk = [-11/3 -3]';
 
-% minFrankWolfe(x, minf, A, b, xk)
-% minGradientProjection(x, minf, A, b, xk)
+minFrankWolfe(x, minf, A, b, xk)
+minGradientProjection(x, minf, A, b, xk)
+
+% RicOp.FrankWolfe(minf, A, b, xk, 2)
+% RicOp.gradienteProiettato(minf, A, b, xk, 2)
 
 %%
 % ----------------------------------- lkkt ----------------------------------- %
 
 g = A * x - b;
 
+%%
+
 sympref('FloatingPointOutput', true)
 % sympref('FloatingPointOutput', false)
 
-% LKKTsystem(x, minf, g)
+symrat(0)
+symrat
+
+LKKTsystem(x, minf, g)
+
+RicOp.LKKT(minf, g)
 
 %%
 % ----------------------------------- plot ----------------------------------- %
@@ -54,4 +66,4 @@ sympref('FloatingPointOutput', true)
 % plotSurfOnPolygon(f, points);
 % hold off
 
-% plotSurfOnContraints(f, g, fmesh=true)
+plotSurfOnContraints(f, g, fmesh = true)

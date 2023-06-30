@@ -39,6 +39,19 @@ function [A, b] = polygonContraints (points)
             continue
         end
 
+        if p1(2) == p2(2)
+
+            if middle(2) < p1(2)
+                eqs = [eqs; y <= p1(2)];
+                % equalities = [equalities; y - p1(2) == 0];
+            else
+                eqs = [eqs; y >= p1(2)];
+                % equalities = [equalities; -y + p1(2) == 0];
+            end
+
+            continue
+        end
+
         coeff = [p1(1) 1; p2(1) 1] \ [p1(2); p2(2)];
 
         a = coeff(1);

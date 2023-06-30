@@ -43,10 +43,12 @@ function dijkstra(edges, root)
     Q = [root];
 
     sequence_table = table(nodes);
+    q_table = table();
     step = 0;
 
     while ~isempty(Q)
         step = step + 1;
+        q_table.("Q"+string(step)) = Q;
         sequence_table.("pot"+string(step)) = potential;
         sequence_table.("pred"+string(step)) = predecessor;
 
@@ -74,6 +76,8 @@ function dijkstra(edges, root)
 
     sequence_table.potential = potential;
     sequence_table.predecessor = predecessor;
+
+    q_table
     sequence_table
 
     shortest_path_tree_edges = [predecessor(2:end) nodes(2:end)];

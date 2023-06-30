@@ -68,6 +68,7 @@ function [restricted, plotSurf] = plotSurfOnContraints(f, g, h, opt)
         hold off
         ax = gca;
         ax.Children = ax.Children([2 1]);
+        legend
     else
         plotSurf = fsurf(restricted, "DisplayName", "restricted");
     end

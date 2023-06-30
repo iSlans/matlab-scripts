@@ -130,20 +130,22 @@ syms x [2 1]
 
 minf = -2 * x1 ^ 2 -6 * x1 * x2 -10 * x1 - 3 * x2;
 
-% polygonContraints([
-%     -2 2
-%     4 2
-%     4 0
-%     0 -3
-%     ])
+% polygonContraints(points)
+
+points = [
+    -2 2
+    4 2
+    4 0
+    0 -3
+    ];
 
 A = [
+    0 1
+    1 0
     -5 -2
     3 -4
-    1 0
-    0 1
     ];
-b = [6 12 4 2]';
+b = [2 4 6 12]';
 
 % minFrankWolfe(x, minf, A, b, [1 2])
 format rat
@@ -160,6 +162,11 @@ LKKTsystem(x, minf, g);
 
 % % fsurf(matlabFunction(minf))
 
-plotSurfOnContraints(minf, g, fmesh = true)
+% figure
+% plotSurfOnPolygon(minf, points)
+% figure
+% plotSurfOnContraints(minf, g)
+% figure
+% plotSurfOnContraints(minf, g, fmesh = true)
 
-eig(hessian(x2 - x1 ^ 2))
+% eig(hessian(x2 - x1 ^ 2))
