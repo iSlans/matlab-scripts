@@ -13,7 +13,7 @@ Ricerca Operativa - Ing. Informatica Unipi
 
 ⚠️ **~~in development~~ ...** ⚠️
 
-Ciao, ormai ho dato l'esame, non ho tanto tempo e voglia per dedicarmi a scrivere la documentazione e correggere gli script. Se volete fate un vostro fork...
+Ciao, ormai ho dato l'esame, non ho tanto tempo e voglia per dedicarmi attivamente a scrivere la documentazione e correggere gli script. Se volete potete contribuire / fare un vostro fork...
 
 ---
 
@@ -64,32 +64,29 @@ see [documentation.md](documentation.md)
 - Optimization toolbox
 - Symbolic toolbox
 
-1. Clone the project
+1. Clone the project ([how to clone a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository))
 
 ~~~bash
 git clone https://github.com/iSlans/matlab-scripts.git
 ~~~
 
-2. Go to the project directory
+2. Go to the project directory (open the folder in Matlab)
 
 ~~~bash
 cd matlab-scripts
 ~~~
 
-Use scripts from Matlab Editor, or use VS Code and run Matlab from terminal
-
 3. ⚠️ **Add Folder & Subfolders** to Matlab paths
    
-   1. by yourself, e.g. from Matlab editor
-   2. or run this custom function in Matlab command window, inside `matlab-scripts` folder, it excludes `.git` and `.vscode` folders
+   a. By yourself, [e.g. from Matlab editor](https://andysbrainbook.readthedocs.io/en/latest/Matlab/Matlab_03_FunctionsPaths.html)
+   b. Run this function in Matlab command window, inside `matlab-scripts` folder, it will add the paths, except `.git` and `.vscode` folders
 
 ~~~bash
 >> myaddpath(pwd)
 ~~~
 
-4. Try some my test scripts, in `test/` folder, open and try to run them. They are examples of how to use my scripts
+4. **Done! Now you can use the functions** 
 
-~~~bash
->> run('./test/test_ktree.m')
-~~~
-
+5. You can find 
+   - a lot of examples of how to use those functions in [test](test/) folder files.
+   - documentation in [documentation.md](documentation.md) file
